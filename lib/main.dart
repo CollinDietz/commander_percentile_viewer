@@ -147,7 +147,7 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
             child: GridView.builder(
               padding: const EdgeInsets.all(8),
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 260,
+                maxCrossAxisExtent: 400,
                 childAspectRatio: 0.6,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
@@ -229,7 +229,7 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
         return DraggableScrollableSheet(
           initialChildSize: 0.9,
           minChildSize: 0.5,
-          maxChildSize: 0.95,
+          maxChildSize: 1,
           expand: false,
           builder: (context, scrollController) {
             return SingleChildScrollView(
