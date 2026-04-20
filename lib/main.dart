@@ -311,91 +311,106 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(8),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 400,
-                childAspectRatio: 0.6,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-              ),
-              itemCount: filtered.length,
-              itemBuilder: (context, index) {
-                final item = filtered[index];
-                final name = item['card']?['name'] ?? 'Unknown';
-                final numDecks = item['edhrecEntry']?['numDecks'] ?? 0;
-                final imageUrl = _getImageUrl(item);
-                final cardId = item['card']?['id'] as String? ?? '';
-                final isFav = _favoriteIds.contains(cardId);
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final computedCount = (constraints.maxWidth / 280).floor();
+                final crossAxisCount = computedCount < 2 ? 2 : computedCount;
 
-                return GestureDetector(
-                  onTap: () => _showDetailModal(context, item),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: imageUrl != null
-                              ? Image.network(
-                                  imageUrl,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  errorBuilder: (_, __, ___) => const Center(
-                                    child: Icon(Icons.broken_image, size: 48),
-                                  ),
-                                )
-                              : const Center(
-                                  child: Icon(
-                                    Icons.image_not_supported,
-                                    size: 48,
-                                  ),
-                                ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: IntrinsicHeight(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        name,
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.titleSmall,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        '$numDecks decks',
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.bodySmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                FittedBox(
-                                  fit: BoxFit.fitHeight,
-                                  child: Icon(
-                                    isFav
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: isFav ? null : Colors.transparent,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                return GridView.builder(
+                  padding: const EdgeInsets.all(8),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    childAspectRatio: 0.6,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
                   ),
+                  itemCount: filtered.length,
+                  itemBuilder: (context, index) {
+                    final item = filtered[index];
+                    final name = item['card']?['name'] ?? 'Unknown';
+                    final numDecks = item['edhrecEntry']?['numDecks'] ?? 0;
+                    final imageUrl = _getImageUrl(item);
+                    final cardId = item['card']?['id'] as String? ?? '';
+                    final isFav = _favoriteIds.contains(cardId);
+
+                    return GestureDetector(
+                      onTap: () => _showDetailModal(context, item),
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: imageUrl != null
+                                  ? Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      errorBuilder: (_, __, ___) =>
+                                          const Center(
+                                            child: Icon(
+                                              Icons.broken_image,
+                                              size: 48,
+                                            ),
+                                          ),
+                                    )
+                                  : const Center(
+                                      child: Icon(
+                                        Icons.image_not_supported,
+                                        size: 48,
+                                      ),
+                                    ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: IntrinsicHeight(
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            name,
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.titleSmall,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            '$numDecks decks',
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.bodySmall,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    FittedBox(
+                                      fit: BoxFit.fitHeight,
+                                      child: Icon(
+                                        isFav
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: isFav
+                                            ? null
+                                            : Colors.transparent,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             ),
