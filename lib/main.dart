@@ -78,6 +78,21 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
     return null;
   }
 
+  String? _getLargeImageUrl(Map<String, dynamic> item) {
+    final card = item['card'] as Map<String, dynamic>?;
+    if (card == null) return null;
+    final imageUris = card['image_uris'] as Map<String, dynamic>?;
+    if (imageUris != null) return imageUris['large'] as String?;
+    final faces = card['card_faces'] as List<dynamic>?;
+    if (faces != null && faces.isNotEmpty) {
+      final faceUris =
+          (faces[0] as Map<String, dynamic>)['image_uris']
+              as Map<String, dynamic>?;
+      return faceUris?['large'] as String?;
+    }
+    return null;
+  }
+
   List<Map<String, dynamic>> get _filteredItems {
     return _allItems.where((item) {
       final numDecks =
@@ -201,7 +216,7 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
   void _showDetailModal(BuildContext context, Map<String, dynamic> item) {
     final card = item['card'] as Map<String, dynamic>? ?? {};
     final edhrecEntry = item['edhrecEntry'] as Map<String, dynamic>? ?? {};
-    final imageUrl = _getImageUrl(item);
+    final imageUrl = _getLargeImageUrl(item) ?? _getImageUrl(item);
 
     showModalBottomSheet(
       context: context,
