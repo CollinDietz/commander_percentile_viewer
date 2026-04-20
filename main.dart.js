@@ -35225,7 +35225,7 @@ $3(a,b,c){return B.y8},
 $S:234}
 A.a5A.prototype={
 $1(a){var s=this
-return new A.li(0.9,0.5,0.95,!1,new A.a5z(s.a,s.b,s.c,s.d),null)},
+return new A.li(0.9,0.5,1,!1,new A.a5z(s.a,s.b,s.c,s.d),null)},
 $S:236}
 A.a5z.prototype={
 $2(a,a0){var s,r,q,p=this,o=null,n="type_line",m="mana_cost",l="oracle_text",k="toughness",j="color_identity",i="keywords",h="set_name",g="released_at",f="edhrec_rank",e="legalities",d=t.F,c=A.d([A.ny(A.acY(o,new A.eg(B.cJ,o,o,A.Ba(2),o,o,B.bh),4,B.zN,o,40),o,o)],d),b=p.b
@@ -51807,7 +51807,7 @@ s=this.b
 return s*(B.h.iq(a-1,this.a)+1)-(s-this.d)}}
 A.a24.prototype={}
 A.a25.prototype={
-CI(a){var s=a.w,r=Math.max(1,B.c.jH(s/268)),q=Math.max(0,s-8*(r-1))/r,p=q/0.6
+CI(a){var s=a.w,r=Math.max(1,B.c.jH(s/408)),q=Math.max(0,s-8*(r-1))/r,p=q/0.6
 return new A.a28(r,p+8,q+8,p,q,A.qG(a.x))}}
 A.p8.prototype={
 k(a){return"crossAxisOffset="+A.l(this.w)+"; "+this.RT(0)}}
@@ -57022,7 +57022,7 @@ ti(a,b){return this.Q.$2(a,b)}}
 A.lh.prototype={
 bK(a){var s=this
 s.Sa(a)
-a.push("minExtent: "+A.l(s.b)+", extent: "+A.l(s.a)+", maxExtent: "+A.l(s.c)+", initialExtent: "+A.l(s.d))}}
+a.push("minExtent: "+A.l(s.b)+", extent: "+A.l(s.a)+", maxExtent: "+s.c+", initialExtent: "+A.l(s.d))}}
 A.xD.prototype={
 K1(a,b){var s,r=this
 r.a=null
