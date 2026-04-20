@@ -253,11 +253,7 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
                     Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          imageUrl,
-                          height: 350,
-                          fit: BoxFit.contain,
-                        ),
+                        child: Image.network(imageUrl, fit: BoxFit.contain),
                       ),
                     ),
                   const SizedBox(height: 16),
