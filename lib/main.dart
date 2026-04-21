@@ -360,50 +360,34 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
                                       ),
                                     ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: IntrinsicHeight(
-                                child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            name,
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.titleSmall,
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            '$numDecks decks',
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    FittedBox(
-                                      fit: BoxFit.fitHeight,
-                                      child: Icon(
-                                        isFav
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        color: isFav
-                                            ? null
-                                            : Colors.transparent,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            ListTile(
+                              // dense: true,
+                              // visualDensity: VisualDensity.compact,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              title: Text(
+                                name,
+                                style: Theme.of(context).textTheme.titleSmall,
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              subtitle: Text(
+                                '$numDecks decks',
+                                style: Theme.of(context).textTheme.bodySmall,
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              trailing: Icon(
+                                isFav ? Icons.favorite : Icons.favorite_border,
+                                color: isFav ? null : Colors.transparent,
+                              ),
+                              leading: Icon(
+                                isFav ? Icons.favorite : Icons.favorite_border,
+                                color: Colors.transparent,
                               ),
                             ),
                           ],
@@ -604,7 +588,7 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
                         children: [
                           for (int p = 0; p <= 90; p += 10)
                             FilterChip(
-                              label: Text('${p}th'),
+                              label: Text('${p}–${p + 10}%'),
                               selected: _selectedPercentiles.contains(p),
                               onSelected: (selected) {
                                 setState(() {
@@ -613,9 +597,12 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
                                   } else {
                                     _selectedPercentiles.remove(p);
                                   }
+                                  // Reset deck slider to absolute range;
+                                  // the slider bounds will be recomputed
+                                  // from the new percentile-filtered set.
                                   _deckRange = RangeValues(
-                                    dynDeckMin,
-                                    dynDeckMax,
+                                    _minDecks,
+                                    _maxDecks,
                                   );
                                 });
                                 setDrawerState(() {});
@@ -648,7 +635,6 @@ class _CommanderGridPageState extends State<CommanderGridPage> {
                         onChanged: (v) {
                           setState(() {
                             _deckRange = v;
-                            _selectedPercentiles = {};
                           });
                           setDrawerState(() {});
                         },
